@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="reminder">
+	<head>
+		<meta charset="UTF-8">
+		<title>iCloud</title>
+		<link rel="stylesheet" href="css/yun.css" />
+		<script src="js/angular.js"></script>
+		<script src="js/jquery.js"></script>
+	    <script src="js/yun.js"></script>
+	</head>
+	<body ng-controller="mainCtrl">
+		<div class="list">
+			<div class="top">
+				<div class="zuo">
+					<div class="icloud"></div>
+					<label class="label">提醒事项</label>
+					<div class="chevron"></div>
+				</div>
+				<div class="you">
+					<div class="add" ng-click="addList();save2local()"></div>
+				</div>
+			</div>
+			<div class="yijihua">
+				<div class="icon"></div>
+				<div class="over">已计划</div>
+			</div>
+			<div my-ul>
+			<!--<ul class="list-group" >-->
+				<li class="list-group-item" ng-class="{active:cu===$index}" ng-repeat="v in lists track by $index">
+					<input type="text" ng-keyup="save2local()" ng-model="v.name" class="form-control" style="width:60%;height: 60%;background:#383836;margin-top: 2%;border:0;color:#fff"/>
+					<div class="badge {{v.theme}}"></div>
+					<div title="编辑共享设置" class="gongxiang"></div>
+				</li>
+			<!--</ul>-->
+			</div>
+		</div>
+		<div class="content">
+			<div class="top">
+		            <div class="zuo">
+		                    <span class="input-group-addon">
+		                        <div class="sousuo"></div>
+		                    </span>
+		                <input type="text" class="form-control" placeholder="搜索所有提醒">
+		            </div>
+		            <div class="you">
+		            	<div class="usename">
+		            		<span>用户名</span>
+		                	<div class="chevron"></div>
+		            	</div>
+		            	<ul class="shezhi">
+		            		<li>iCloud设置</li>
+		            		<li>注销</li>
+		            	</ul>
+		            	
+		                <div class="wenhao"></div>
+		            </div>
+		        </div>	
+		        
+			<div class="main">
+	            <div class="new-list ">
+	                <div class="new {{lists[cu].theme}}">{{lists[cu].name}}</div>
+	                <div class="build" ng-click="color($event)">选项</div>
+	                	
+	                <!--点击选项出现-->
+	                <div class="choose">
+	                    <div class="con">
+	                        <input type="text" ng-model="lists[cu].name" class="{{lists[cu].theme}}"/>
+	                        <div class="list-color">列表颜色</div>
+	                        <ul class="color">
+	                        	<li class="{{v}}" ng-repeat="v in colors track by $index" ng-click="lists[cu].theme=v;save2local()">
+	                        		<div class="quan badge {{v}}"></div>
+	                        	</li>
+	                        </ul>
+	                        
+	                        <div class="caozuo">
+	                            <button type="button" class="btn btn-link" ng-click="delList();save2local()">删除</button>
+	                            <button type="button" class="btn btn-link">取消</button>
+	                            <button type="button" class="btn btn-link" ng-click="save2local()">完成</button>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	            </div>
+	            
+	            <div class="right-finish">
+					<div class="uls">
+						<div class="done">
+							<a href="#"><span class="s"></span>已完成: <span>{{count1()}}</span>项</a>
+							<a href="#" class="del" ng-click="clear();save2local()">清除所有完成选项</a>
+						</div>
+						<ul>
+							<li class="yi" ng-if="v.state===1" ng-repeat="v in lists[cu].todos track by $index">
+								<div class="big {{lists[cu].theme}}">
+									<div class="small {{lists[cu].theme}}" ng-click="v.state=0;save2local()">-</div>
+								</div>
+								<input type="text" ng-model="v.name"/>
+							</li>
+						</ul>
+						
+					</div>	
+					
+					<div class="uls">	
+						<div class="lis">
+							<a href="#">
+								<span class="s1"></span>未完成: <span>{{count0()}}</span>项
+							</a>
+						</div>
+						<ul>
+							<li class="wei" ng-if="v.state===0" ng-repeat="v in lists[cu].todos track by $index">
+								<div class="big {{lists[cu].theme}}" ng-click="v.state=1;save2local()">+</div>
+								<input type="text" ng-model="v.name" />
+							</li>
+						</ul>
+					</div>	
+					
+					<div class="uls">						
+						<div class="import">
+							<span class="zeng {{lists[cu].theme}}" ng-click="lists[cu].todos.push({name:value,state:0});save2local()">+</span>
+							<input class="text" type="text" ng-model="value"/>
+						</div>
+		 			</div>	
+					
+					<div class="uls">	
+		 				<div block></div>
+					</div>
+				</div>
+	
+			</div>	
+		</div>
+	</body>
+</html>
